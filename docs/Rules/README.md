@@ -1,6 +1,6 @@
 ---
 description: List of PSScriptAnalyzer rules
-ms.custom: PSSA v1.21.0
+ms.custom: PSSA v1.22.0
 ms.date: 06/28/2023
 ms.topic: reference
 title: List of PSScriptAnalyzer rules
@@ -27,6 +27,7 @@ The PSScriptAnalyzer contains the following rule definitions.
 | [AvoidSemicolonsAsLineTerminators](./AvoidSemicolonsAsLineTerminators.md)                         | Warning     |         No         |                 |
 | [AvoidShouldContinueWithoutForce](./AvoidShouldContinueWithoutForce.md)                           | Warning     |        Yes         |                 |
 | [AvoidTrailingWhitespace](./AvoidTrailingWhitespace.md)                                           | Warning     |        Yes         |                 |
+| [AvoidUsingAllowUnencryptedAuthentication](./AvoidUsingAllowUnencryptedAuthentication.md)         | Warning     |        Yes         |                 |
 | [AvoidUsingBrokenHashAlgorithms](./AvoidUsingBrokenHashAlgorithms.md)                             | Warning     |        Yes         |                 |
 | [AvoidUsingCmdletAliases](./AvoidUsingCmdletAliases.md)                                           | Warning     |        Yes         | Yes<sup>2</sup> |
 | [AvoidUsingComputerNameHardcoded](./AvoidUsingComputerNameHardcoded.md)                           | Error       |        Yes         |                 |
