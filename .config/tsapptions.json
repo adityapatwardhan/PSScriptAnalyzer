@@ -1,8 +1,0 @@
-{
-    "codebaseName": "PSSA_202004",
-    "tools": [
-        "CredScan",
-        "PoliCheck",
-        "BinSkim"
-    ]
-  }
