@@ -117,27 +117,3 @@ extends:
           inputs:
             Contents: "$(signOutPath)/PSScriptAnalyzer.$(moduleVersion).nupkg"
             TargetFolder: $(Build.ArtifactStagingDirectory)/ONEBRANCH_ARTIFACT/nupkg
-    - stage: compliance
-      displayName: Compliance
-      dependsOn: Build
-      jobs:
-      - job: Compliance_Job
-        pool:
-          type: windows
-        variables:
-        - name: ob_outputDirectory
-          value: '$(Build.ArtifactStagingDirectory)/ONEBRANCH_ARTIFACT'
-        steps:
-        - checkout: self
-        - checkout: ComplianceRepo
-        - download: current
-          artifact: build
-        - template: assembly-module-compliance.yml@ComplianceRepo
-          parameters:
-            sourceScanPath: '$(Build.SourcesDirectory)/OSS_Microsoft_PSSA'
-            AnalyzeTarget: '$(Pipeline.Workspace)\build\bin\PSV7Release\netcoreapp3.1\Microsoft.Windows.PowerShell.ScriptAnalyzer*.dll'
-            suppressionsFile: '$(Build.SourcesDirectory)/OSS_Microsoft_PSSA/tools/ReleaseBuild/CredScan.Suppressions.json'
-            optionsRulesDBPath: ''
-            optionsFTPath: ''
-            codeBaseName: 'PSSA_202004'
-            APIScan: false
