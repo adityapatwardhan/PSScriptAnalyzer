@@ -51,6 +51,19 @@ extends:
           type: windows
         steps:
         - checkout: self
+        - checkout: ComplianceRepo
+
+        - pwsh: |
+            if (-not (Test-Path $(Build.SourcesDirectory)/OSS_Microsoft_PSSA/.config/tsaoptions.json)) {
+              Get-ChildItem $(Build.SourcesDirectory) -recurse -ErrorAction SilentlyContinue
+              throw "tsaoptions.json does not exist under $(Build.SourcesDirectory)/OSS_Microsoft_PSSA/.config"
+            }
+          displayName: Test if tsaoptions.json exists
+
+        - pwsh: |
+            Copy-Item '$(Build.SourcesDirectory)/OSS_Microsoft_PSSA/.config/tsaoptions.json' '$(Build.SourcesDirectory)/.config/tsaoptions.json' -Force -Verbose
+          displayName: Copy tsaoptions
+
         - pwsh: |
             Set-Location "$(Build.SourcesDirectory)/OSS_Microsoft_PSSA"
             try { ./build.ps1 -Configuration Release -All } catch { throw $_ }
@@ -84,7 +97,7 @@ extends:
             Write-Host "sending $vstsCommandString"
             Write-Host "##$vstsCommandString"
           displayName: Setup variables for signing
-        - checkout: ComplianceRepo
+
         - template: EsrpSign.yml@ComplianceRepo
           parameters:
             buildOutputPath: $(signSrcPath)
