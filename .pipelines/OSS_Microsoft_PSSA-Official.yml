@@ -30,6 +30,13 @@ extends:
   template: v2/OneBranch.Official.CrossPlat.yml@onebranchTemplates
   parameters:
     customTags: 'ES365AIMigrationTooling'
+    globalSdl:
+      runMode: stage
+      perStage:
+        stageName:
+          tsa:
+            configFile: $(Build.SourcesDirectory)/OSS_Microsoft_PSSA/.config/tsaoptions.json
+
     stages:
     - stage: Build
       displayName: Build
@@ -44,13 +51,6 @@ extends:
           type: windows
         steps:
         - checkout: self
-        - pwsh: |
-            if (-not (Test-Path $(Build.SourcesDirectory)/.config/tsaoptions.json))
-            {
-              Get-ChildItem $(Build.SourcesDirectory) -recurse
-              throw "tsaconfig.json file is not present"
-            }
-          displayName: Test if tsaconfig file is present
         - pwsh: |
             Set-Location "$(Build.SourcesDirectory)/OSS_Microsoft_PSSA"
             try { ./build.ps1 -Configuration Release -All } catch { throw $_ }
@@ -124,10 +124,3 @@ extends:
           inputs:
             Contents: "$(signOutPath)/PSScriptAnalyzer.$(moduleVersion).nupkg"
             TargetFolder: $(Build.ArtifactStagingDirectory)/ONEBRANCH_ARTIFACT/nupkg
-        - pwsh: |
-            if (-not (Test-Path $(Build.SourcesDirectory)/.config/tsaoptions.json))
-            {
-              Get-ChildItem $(Build.SourcesDirectory) -recurse
-              throw "tsaconfig.json file is not present"
-            }
-          displayName: Test if tsaconfig file is present
