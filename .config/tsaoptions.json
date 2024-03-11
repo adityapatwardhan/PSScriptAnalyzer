@@ -6,7 +6,7 @@
         "jimtru@microsoft.com",
         "slee@microsoft.com"
     ],
-    "codebaseName": "PSSA_202004",
+    "codebaseName": "PSSA_202403",
     "tools": [
         "CredScan",
         "PoliCheck",
