@@ -45,7 +45,11 @@ extends:
         steps:
         - checkout: self
         - pwsh: |
-            Get-ChildItem $(Build.SourcesDirectory)/.config -Recurse -Verbose
+            if (-not (Test-Path $(Build.SourcesDirectory)/.config/tsaconfig.json))
+            {
+              Get-ChildItem $(Build.SourcesDirectory) -recurse
+              throw "tsaconfig.json file is not present"
+            }
           displayName: Test if tsaconfig file is present
         - pwsh: |
             Set-Location "$(Build.SourcesDirectory)/OSS_Microsoft_PSSA"
@@ -121,5 +125,9 @@ extends:
             Contents: "$(signOutPath)/PSScriptAnalyzer.$(moduleVersion).nupkg"
             TargetFolder: $(Build.ArtifactStagingDirectory)/ONEBRANCH_ARTIFACT/nupkg
         - pwsh: |
-            Get-ChildItem $(Build.SourcesDirectory)/.config -Recurse -Verbose
+            if (-not (Test-Path $(Build.SourcesDirectory)/.config/tsaconfig.json))
+            {
+              Get-ChildItem $(Build.SourcesDirectory) -recurse
+              throw "tsaconfig.json file is not present"
+            }
           displayName: Test if tsaconfig file is present
